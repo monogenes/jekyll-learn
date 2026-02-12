@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ site.title }}</title>
+    </head>
+    <body>
+        {% include header.html color="blue" %}
+        {% for page in site.page %}
+            <h3><a href="{{ page.title }}">{{ page.title }}</a></h3>
+        {% endfor %}
+        <hr>
+        {{ content }}
+    </body>
+</html>

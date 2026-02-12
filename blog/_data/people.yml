@@ -1,0 +1,11 @@
+- name: "Dave Vigliotti"
+  role: "Author"
+  email: "dave.vigliotti@example.com"
+  occupation: "Software Engineer"
+
+- name: "Jane Doe"
+  role: "Editor"
+  email: "dvigiotti@sixpencetech.com"
+  occupation: "Technical Editor"
+
+  
