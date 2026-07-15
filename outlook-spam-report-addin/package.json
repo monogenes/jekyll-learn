@@ -1,0 +1,18 @@
+{
+  "name": "outlook-spam-report-addin",
+  "version": "1.0.0",
+  "description": "Outlook task-pane add-in that drafts a Spam Alert to THG.all for the selected message (Phase 1: human-in-the-loop).",
+  "private": true,
+  "scripts": {
+    "validate": "office-addin-manifest validate manifest.xml",
+    "dev-certs": "office-addin-dev-certs install",
+    "start": "http-server . -S -C \"$HOME/.office-addin-dev-certs/localhost.crt\" -K \"$HOME/.office-addin-dev-certs/localhost.key\" -p 3000 --cors",
+    "sideload": "office-addin-debugging start manifest.xml"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "office-addin-debugging": "^6.0.0",
+    "office-addin-dev-certs": "^1.13.0",
+    "office-addin-manifest": "^1.13.0"
+  }
+}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Report as Spam — Outlook task-pane add-in (Phase 1: human-in-the-loop)
+
+  This is the XML ("add-in only") manifest. It works across Outlook on the web,
+  new & classic Outlook on Windows, Outlook on Mac, and Outlook mobile.
+
+  All resource URLs below point at a local dev server (https://localhost:3000).
+  Change the <bt:Url> / IconUrl values in the two spots noted below when you
+  host the static files somewhere else.
+-->
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <!-- Unique add-in id. Regenerate with a fresh GUID if you fork this. -->
+  <Id>b11c792f-70e4-4bd5-a6d1-8d7cda49ebc2</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>THG</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Report as Spam"/>
+  <Description DefaultValue="Capture the sender and subject of the selected message and open a pre-filled Spam Alert to THG.all for manual review before sending."/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://localhost:3000/README.md"/>
+
+  <!-- Host domains the task pane is allowed to navigate to. -->
+  <AppDomains>
+    <AppDomain>https://localhost:3000</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <!-- Base requirement set. displayNewMessageForm needs Mailbox 1.6; we keep the
+       floor at 1.3 (required by VersionOverrides) and feature-detect 1.6 at runtime. -->
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000/src/taskpane/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- ReadWriteMailbox is not needed; we only read the item and open a new compose form. -->
+  <Permissions>ReadItem</Permissions>
+
+  <!-- Activate only when reading a message. -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <!-- Required by the schema even though this add-in only uses ShowTaskpane. -->
+          <FunctionFile resid="Commands.Url"/>
+
+          <!-- Ribbon on the message-read surface. -->
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadSpamGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="msgReadReportSpamButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <!-- Opens the task pane; the pane reads the item and drafts the alert. -->
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/src/taskpane/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/src/commands/commands.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GroupLabel" DefaultValue="Spam Tools"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Report as Spam"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Draft a Spam Alert to THG.all for the selected message. You review and send it manually."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

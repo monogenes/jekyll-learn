@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Report as Spam</title>
+
+    <!-- Office JavaScript API -->
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+    <link rel="stylesheet" href="taskpane.css"/>
+</head>
+<body>
+    <main class="pane">
+        <header class="pane__header">
+            <h1 class="pane__title">Report as Spam</h1>
+            <p class="pane__subtitle">Phase 1 &middot; you review and send</p>
+        </header>
+
+        <section class="card" aria-live="polite">
+            <h2 class="card__heading">Selected message</h2>
+            <dl class="details">
+                <dt>Sender</dt>
+                <dd id="senderValue">&mdash;</dd>
+                <dt>Subject</dt>
+                <dd id="subjectValue">&mdash;</dd>
+            </dl>
+        </section>
+
+        <button id="reportButton" class="btn btn--primary" type="button" disabled>
+            Draft Spam Alert to THG.all
+        </button>
+
+        <p id="status" class="status" role="status"></p>
+
+        <footer class="pane__footer">
+            <p>
+                Clicking the button opens a pre-filled compose window addressed to
+                <strong>THG.all</strong>. Nothing is sent automatically &mdash; check the
+                draft and press <em>Send</em> yourself. Automatic sending is planned for phase 2.
+            </p>
+        </footer>
+    </main>
+
+    <script src="taskpane.js"></script>
+</body>
+</html>

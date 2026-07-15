@@ -1,0 +1,125 @@
+:root {
+    --spam-red: #c41e3a;
+    --spam-red-dark: #a5182f;
+    --ink: #201f1e;
+    --muted: #605e5c;
+    --line: #edebe9;
+    --bg: #faf9f8;
+    --ok: #107c10;
+    --warn: #a4262c;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.pane {
+    padding: 16px;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.pane__header {
+    border-bottom: 3px solid var(--spam-red);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.pane__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pane__subtitle {
+    margin: 2px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+}
+
+.card__heading {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin: 0 0 8px;
+}
+
+.details {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    row-gap: 6px;
+    column-gap: 10px;
+}
+
+.details dt {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.details dd {
+    margin: 0;
+    word-break: break-word;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn--primary {
+    background: var(--spam-red);
+    color: #ffffff;
+}
+
+.btn--primary:hover:not([disabled]) { background: var(--spam-red-dark); }
+
+.btn[disabled] {
+    background: #c8c6c4;
+    cursor: not-allowed;
+}
+
+.status {
+    min-height: 18px;
+    margin: 10px 0 0;
+    font-size: 13px;
+}
+
+.status--ok { color: var(--ok); }
+.status--error { color: var(--warn); }
+
+.pane__footer {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.pane__footer p { margin: 0; }
