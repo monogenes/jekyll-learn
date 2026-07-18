@@ -36,6 +36,9 @@ of the tools the agent can choose to use.
   vectors    →    retrieval   →    basic RAG    →    tool use   →   agentic RAG
  (what is a      (find the        (retrieve +       (models that   (agent decides
   vector?)        right docs)      generate)         take actions)  when to retrieve)
+
+  Lesson 6: real embeddings — swap the toy vectorizer for a trained model and
+  watch lesson 1's blind spot disappear, with every other lesson unchanged.
 ```
 
 ---
@@ -49,6 +52,9 @@ of the tools the agent can choose to use.
 | 3 | `lesson_03_rag.py` | Feed retrieved chunks to Claude to get grounded answers | Yes |
 | 4 | `lesson_04_tools.py` | Let Claude call tools — the tool-use loop | Yes |
 | 5 | `lesson_05_agent.py` | An agent that retrieves + calculates on its own | Yes |
+| 6 | `lesson_06_real_embeddings.py` | Swap the toy vectorizer for a real embedding model — same interface, smarter vectors | One backend* |
+
+\* Lesson 6 needs either Voyage AI (`pip install voyageai` + a `VOYAGE_API_KEY`) **or** a free local model (`pip install sentence-transformers`). It auto-detects whichever you install. No Claude key required.
 
 Supporting files:
 
@@ -93,10 +99,11 @@ Here's how each maps to the real world:
 
 - **Real embeddings instead of TF-IDF.** Our vectorizer only matches literal
   words. Production systems use a trained embedding model that captures
-  *meaning* (so "access key" and "credential" are close). Anthropic recommends
-  [Voyage AI](https://www.voyageai.com/) for embeddings; the popular local,
-  free option is `sentence-transformers`. Swap the vectorizer in `rag_lib.py`
-  and keep the `Retriever` interface — every lesson still runs. (Exercise 15.)
+  *meaning* (so "access key" and "credential" are close). **Lesson 6 does
+  exactly this** — it drops a real model (Voyage AI or a free local
+  `sentence-transformers` model) into the same `Retriever` interface and shows
+  the improvement directly. Anthropic recommends
+  [Voyage AI](https://www.voyageai.com/) as its embedding partner.
 
 - **A real vector database instead of a Python list.** We loop over every chunk
   in memory. That's fine for hundreds of docs; at millions you'd use a vector
