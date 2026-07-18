@@ -39,6 +39,8 @@ of the tools the agent can choose to use.
 
   Lesson 6: real embeddings — swap the toy vectorizer for a trained model and
   watch lesson 1's blind spot disappear, with every other lesson unchanged.
+  Lesson 7: evaluation — score retrieval on a labeled test set so every change
+  (chunking, top_k, embedding model) becomes a measured win or loss.
 ```
 
 ---
@@ -53,8 +55,11 @@ of the tools the agent can choose to use.
 | 4 | `lesson_04_tools.py` | Let Claude call tools — the tool-use loop | Yes |
 | 5 | `lesson_05_agent.py` | An agent that retrieves + calculates on its own | Yes |
 | 6 | `lesson_06_real_embeddings.py` | Swap the toy vectorizer for a real embedding model — same interface, smarter vectors | One backend* |
+| 7 | `lesson_07_evaluation.py` | Measure retrieval with a labeled test set (Hit@k, MRR) so improvements become numbers, not hunches | No** |
 
 \* Lesson 6 needs either Voyage AI (`pip install voyageai` + a `VOYAGE_API_KEY`) **or** a free local model (`pip install sentence-transformers`). It auto-detects whichever you install. No Claude key required.
+
+\*\* Lesson 7 runs fully offline on the TF-IDF retriever. If a lesson-6 backend is installed, it *also* prints a head-to-head TF-IDF-vs-embeddings comparison on the same test set — which is how you'd actually decide whether the upgrade is worth it.
 
 Supporting files:
 
@@ -115,10 +120,15 @@ Here's how each maps to the real world:
   `client.beta.messages.tool_runner` with `@beta_tool`-decorated functions and
   the SDK runs the loop for you.
 
-- **Better chunking, re-ranking, and evaluation.** The three biggest levers in
-  real RAG quality are how you split documents, whether you re-rank retrieved
-  results before sending them, and how you *measure* answer quality. Those are
-  the natural next topics once these five lessons click.
+- **Better chunking and re-ranking.** Two of the biggest levers in real RAG
+  quality are how you split documents and whether you re-rank retrieved results
+  before sending them. Lesson 7 gives you the scoreboard (Hit@k, MRR) to test
+  both: change one thing, re-run, keep it only if the numbers go up.
+
+- **Answer evaluation (LLM-as-judge).** Lesson 7 measures *retrieval*. The
+  remaining frontier is grading the final *answer* — did Claude use the context
+  faithfully? The standard technique is to have a model score each answer
+  against its source. That's the natural lesson 8 once these seven click.
 
 For deeper, always-current references, see Anthropic's docs on
 [tool use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
