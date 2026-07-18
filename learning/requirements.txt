@@ -1,0 +1,3 @@
+# Lessons 1 and 2 need NOTHING beyond the Python standard library.
+# Lessons 3, 4, and 5 call the Claude API and need the official SDK:
+anthropic>=0.40
